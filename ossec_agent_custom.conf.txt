@@ -1,0 +1,29 @@
+<!-- 
+  Custom Wazuh Agent Configuration for FIM and Log Monitoring
+  Framework: NIST CSF (DE.CM-1), SOC 2 (CC6.1, CC7.2)
+-->
+<ossec_config>
+  <!-- File Integrity Monitoring (FIM) Configuration -->
+  <syscheck>
+    <frequency>43200</frequency>
+    <scan_on_start>yes</scan_on_start>
+    
+    <!-- Monitor critical system directories for unauthorized modifications -->
+    <directories check_all="yes">C:\Windows\System32, /etc,/usr/bin,/usr/sbin</directories>
+    
+    <!-- Ignore temporary files to prevent alert fatigue -->
+    <ignore>/etc/mtab</ignore>
+    <ignore>/etc/hosts.deny~</ignore>
+  </syscheck>
+
+  <!-- Local Log Collection for Windows Security Events & Syslog -->
+  <localfile>
+    <location>Security</location>
+    <log_format>eventchannel</log_format>
+  </localfile>
+
+  <localfile>
+    <location>/var/log/auth.log</location>
+    <log_format>syslog</log_format>
+  </localfile>
+</ossec_config>
